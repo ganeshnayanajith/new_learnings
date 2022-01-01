@@ -30,7 +30,11 @@ describe('UsersController', () => {
       // remove: (id: number) => {},
       // update: (id: number, attrs: Partial<User>) => {},
     };
-    fakeAuthService = {};
+    fakeAuthService = {
+      signIn: (email: string, password: string) => {
+        return Promise.resolve({ id: 1, email, password } as User);
+      },
+    };
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
@@ -65,5 +69,14 @@ describe('UsersController', () => {
     } catch (e) {
       done();
     }
+  });
+  it('signIn updates session object and returns user', async () => {
+    const session = { userId: 0 };
+    const user = await controller.signIn(
+      { email: 'testc3@test.com', password: 'passwordc3' },
+      session,
+    );
+    expect(user.id).toEqual(1);
+    expect(session.userId).toEqual(1);
   });
 });
