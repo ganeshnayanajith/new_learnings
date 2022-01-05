@@ -1,3 +1,5 @@
+// this file is no longer being using since we converted this into a global middleware
+
 import {
   CallHandler,
   ExecutionContext,
@@ -14,8 +16,7 @@ export class CurrentUserInterceptors implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
     const { userId } = request.session || {};
     if (userId) {
-      const user = await this.usersService.findOne(userId);
-      request.currentUser = user;
+      request.currentUser = await this.usersService.findOne(userId);
     }
     return next.handle();
   }
