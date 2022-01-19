@@ -23,6 +23,16 @@ const DetailsScreen = ({ navigation, route }) => {
             { movie: movie })
         }}/>
       <Button
+        title="Go Back a Screen"
+        onPress={() => {
+          navigation.goBack()
+        }}/>
+      <Button
+        title="Pop a Screen"
+        onPress={() => {
+          navigation.pop()
+        }}/>
+      <Button
         title="Go Back to Home"
         onPress={() => {
           navigation.popToTop()
