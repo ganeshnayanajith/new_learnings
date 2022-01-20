@@ -11,7 +11,7 @@ const DetailsScreen = ({ navigation, route }) => {
     xhr.open('GET', "http://www.omdbapi.com/?apikey=cc456efe&t=Star+Wars&y=1977");
     xhr.send();
     xhr.onload = () => {
-      if (xhr.status == 200) {
+      if (xhr.status === 200) {
         let response = JSON.parse(xhr.response);
         setMovieDetails(response);
 
