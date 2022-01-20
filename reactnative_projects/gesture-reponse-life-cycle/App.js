@@ -26,7 +26,7 @@ export default function App() {
               console.log("2nd view released");
             }}
             onMoveShouldSetResponder={() => {
-              console.log("2nd view should set move");
+              console.log("2nd view should set move?");
             }}
             onResponderMove={() => {
               console.log("2nd view responder move");
