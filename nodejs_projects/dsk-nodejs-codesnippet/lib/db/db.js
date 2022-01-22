@@ -18,10 +18,16 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+
+    logger.log(
+      constants.LOGGER.INFO,
+      constants.LOGGER.SUCCESSFULLY_CONNECTED_TO_THE_DATABASE
+    );
+
   } catch (error) {
     //log the database error
     logger.log(
-      constants.LOGGER.INFO,
+      constants.LOGGER.ERROR,
       constants.LOGGER.COULD_NOT_CONNECT_TO_THE_DATABASE +
       JSON.stringify(error.message)
     );
