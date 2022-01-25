@@ -55,6 +55,9 @@
     "UNAUTHORIZED": "Unauthorized",
     "INVALID_USER": "Invalid User",
     "INVALID_EMAIL": "Invalid Email",
-    "EMAIL_ALREADY_USE": "This email already exists"
+    "EMAIL_ALREADY_USE": "This email already exists",
+    "INVALID_AUTHORIZATION_TOKEN": "Invalid authorization token",
+    "AUTHORIZATION_TOKEN_IS_REQUIRED": "Authorization token is required",
+    "API_ACCESS_KEYS_ARE_REQUIRED": "API access key is required"
   }
 }

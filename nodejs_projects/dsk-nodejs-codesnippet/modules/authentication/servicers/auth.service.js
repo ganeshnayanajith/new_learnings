@@ -1,6 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const authRepo = require('../repositories/auth.repository');
 
 const getJwt = (user) => {
   const data = {
@@ -13,6 +14,21 @@ const getJwt = (user) => {
   });
   tokens.push(accessToken);
   return tokens;
+};
+
+const checkJwt = async (token) => {
+  const userDetails = await authRepo.checkJwt(token);
+  return !!userDetails;
+};
+
+const validateJwt = (token) => {
+  let decoded;
+  try {
+    decoded = jwt.verify(token, config.get('accessToken'));
+  } catch (err) {
+    return err;
+  }
+  return decoded;
 };
 
 /**
@@ -34,6 +50,8 @@ const authResponse = (userDetails) => ({
  */
 module.exports = {
   getJwt,
+  checkJwt,
+  validateJwt,
   authResponse
 };
 

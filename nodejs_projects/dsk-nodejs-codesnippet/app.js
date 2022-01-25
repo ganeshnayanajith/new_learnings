@@ -6,6 +6,7 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 
 const connectDB = require('./lib/db/db');
+const authentication = require('./modules/authentication/middlewares/auth.middleware');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./modules/authentication/routers/auth.route');
@@ -25,6 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Authenticate all requests
+app.use(async (req, res, next) => {
+  await authentication.authRequest(req, res, next);
+});
 app.use('/', indexRouter);
 app.use('/v1/authenticate', authRouter);
 

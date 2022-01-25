@@ -24,7 +24,6 @@ exports.authUser = async (body) => {
   });
 };
 
-
 exports.createUser = async (body, tokens) => {
 
   const user = await User.findOne({
@@ -80,4 +79,13 @@ exports.setDetails = async (details) => {
   });
 };
 
+exports.checkJwt = async (token) => {
+  try {
+    return await User.findOne({
+      accessToken: token,
+    });
+  } catch (err) {
+    return Promise.reject();
+  }
+};
 
