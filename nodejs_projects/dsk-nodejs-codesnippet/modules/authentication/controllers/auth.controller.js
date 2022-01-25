@@ -3,7 +3,7 @@
 const common = require('../../../lib/utils/util');
 const logger = require("../../../lib/logger/logger");
 const CONSTANT = require('../../../lib/constants/constant.json');
-const User = require("../repositories/auth.repository");
+const authRepository = require("../repositories/auth.repository");
 const authService = require("../servicers/auth.service");
 
 /* POST user signUp */
@@ -21,7 +21,7 @@ exports.signUp = async (req, res, next) => {
     );
 
     const tokens = authService.getJwt(requestBody);
-    const user = await User.createUser(requestBody, tokens);
+    const user = await authRepository.createUser(requestBody, tokens);
     const data = common.userAuth(user);
     response = common.commonResponse(
       CONSTANT.RESPONSE_SUCCESS.TRUE,
@@ -64,12 +64,11 @@ exports.login = async (req, res, next) => {
       CONSTANT.LOGGER.LOGIN_API_START + JSON.stringify(requestBody)
     );
 
-    const user = await User.authUser(requestBody);
+    const user = await authRepository.authUser(requestBody);
     const tokens = authService.getJwt(user);
     user.accessToken = tokens[0];
-    user.refreshToken = tokens[1];
     const data = common.userAuth(user);
-    const userObject = await User.setDetails(data);
+    const userObject = await authRepository.setDetails(data);
     const userDetails = authService.authResponse(userObject);
     response = common.commonResponse(
       CONSTANT.RESPONSE_SUCCESS.TRUE,

@@ -38,15 +38,18 @@
     "LOGIN_API_END": "LOGIN_API_END | ",
     "SIGN_UP_API_START": "SIGN_UP_API_START | ",
     "SIGN_UP_API_SUCCESS": "SIGN_UP_API_SUCCESS | ",
-    "SIGN_UP_API_END": "SIGN_UP_API_END | "
+    "SIGN_UP_API_END": "SIGN_UP_API_END | ",
+    "PRODUCT_CREATE_API_START": "PRODUCT_CREATE_API_START | ",
+    "PRODUCT_CREATE_API_SUCCESS": "PRODUCT_CREATE_API_SUCCESS | ",
+    "PRODUCT_CREATE_API_END": "PRODUCT_CREATE_API_END | "
   },
   "MESSAGE": {
-    "EMAIL_CANNOT_BE_EMPTY": "Email can not be empty field",
+    "EMAIL_CANNOT_BE_EMPTY": "Email can not be an empty field",
     "EMAIL_CANNOT_BE_NUMBER": "Email can not be a number format",
     "EMAIL_IS_REQUIRED": "Email is required",
     "EMAIL_FORMAT_IS_INCORRECT": "Invalid email format",
     "VALIDATION_ERROR": "Validation Error",
-    "PASSWORD_CANNOT_BE_EMPTY": "Password field can not be empty",
+    "PASSWORD_CANNOT_BE_EMPTY": "Password field can not be an empty field",
     "PASSWORD_CANNOT_BE_NUMBER": "Password field can not be a number format",
     "PASSWORD_IS_REQUIRED": "Password field is required",
     "PASSWORD_SHOULD_BE_MORE_THAN_6_CHARACTERS": "PASSWORD_SHOULD_BE_MORE_THAN_6_CHARACTERS",
@@ -58,6 +61,12 @@
     "EMAIL_ALREADY_USE": "This email already exists",
     "INVALID_AUTHORIZATION_TOKEN": "Invalid authorization token",
     "AUTHORIZATION_TOKEN_IS_REQUIRED": "Authorization token is required",
-    "API_ACCESS_KEYS_ARE_REQUIRED": "API access key is required"
+    "API_ACCESS_KEYS_ARE_REQUIRED": "API access key is required",
+    "NAME_CANNOT_BE_EMPTY": "Name can not be an empty field",
+    "NAME_CANNOT_BE_NUMBER": "Name can not be a number format",
+    "NAME_IS_REQUIRED": "Name is required",
+    "PRICE_CANNOT_BE_EMPTY": "Price can not be an empty field",
+    "PRICE_SHOULD_BE_NUMBER": "Price should be a number format",
+    "PRICE_IS_REQUIRED": "Price is required"
   }
 }

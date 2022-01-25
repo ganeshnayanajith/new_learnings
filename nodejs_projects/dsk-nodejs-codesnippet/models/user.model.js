@@ -7,15 +7,13 @@ const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      maxlength: [40],
-      sparse: true,
-      default: null,
+      required: true,
+      sparse: true
     },
     password: {
       type: String,
-      default: null,
-      trim: true,
-      required: false,
+      required: true,
+      trim: true
     },
     accessToken: {
       type: String,
@@ -23,10 +21,7 @@ const userSchema = new mongoose.Schema(
     }
   },
   {
-    timestamps: {
-      createdAt: 'createdAt',
-      updatedAt: 'updatedAt',
-    },
+    timestamps: true,
   }
 );
 

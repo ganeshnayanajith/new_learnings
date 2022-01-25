@@ -1,7 +1,7 @@
 'use strict';
 
 const CONSTANT = require("../../../lib/constants/constant.json");
-const User = require("../../../models/user");
+const User = require("../../../models/user.model");
 const isEmpty = require('is-empty');
 const bcrypt = require('bcrypt');
 

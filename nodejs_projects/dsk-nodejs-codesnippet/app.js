@@ -9,7 +9,8 @@ const connectDB = require('./lib/db/db');
 const authentication = require('./modules/authentication/middlewares/auth.middleware');
 
 const indexRouter = require('./routes/index');
-const authRouter = require('./modules/authentication/routers/auth.route');
+const authRouter = require('./modules/authentication/routes/auth.routes');
+const productRouter = require('./modules/product/routes/product.routes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(async (req, res, next) => {
 });
 app.use('/', indexRouter);
 app.use('/v1/authenticate', authRouter);
+app.use('/v1/product', productRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

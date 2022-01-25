@@ -39,7 +39,7 @@ const removeAttributes = (object, attributes) => {
  * @returns {object}
  */
 const userAuth = user => {
-  const msg = removeAttributes(user, ['_id', 'password', '__v', 'accessToken']);
+  const msg = removeAttributes(user, ['_id', 'password', '__v']);
   msg.id = user._id;
   return msg;
 };

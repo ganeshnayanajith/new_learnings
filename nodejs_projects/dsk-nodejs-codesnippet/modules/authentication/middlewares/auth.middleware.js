@@ -40,34 +40,23 @@ const authRequest = async (req, res, next) => {
             .status(CONSTANTS.HTTP_RESPONSE.HTTP_FORBIDDEN)
             .json(response);
         }
-        const tokenInfo = validate.validateJwt(authHeader);
-        if (!isEmpty(tokenInfo)) {
-          req.user = tokenInfo;
 
-          jwt.verify(authHeader, config.get('accessToken'), (err, user) => {
-            if (err) {
-              response = common.commonResponse(
-                CONSTANTS.RESPONSE_SUCCESS.FALSE,
-                null,
-                CONSTANTS.MESSAGE.INVALID_AUTHORIZATION_TOKEN
-              );
-              res
-                .status(CONSTANTS.HTTP_RESPONSE.HTTP_FORBIDDEN)
-                .json(response);
-            } else {
-              next();
-            }
-          });
-        } else {
-          response = common.commonResponse(
-            CONSTANTS.RESPONSE_SUCCESS.FALSE,
-            null,
-            CONSTANTS.MESSAGE.INVALID_AUTHORIZATION_TOKEN
-          );
-          res
-            .status(CONSTANTS.HTTP_RESPONSE.HTTP_FORBIDDEN)
-            .json(response);
-        }
+        jwt.verify(authHeader, config.get("accessToken"), (err, decoded) => {
+          if (err) {
+            response = common.commonResponse(
+              CONSTANTS.RESPONSE_SUCCESS.FALSE,
+              null,
+              CONSTANTS.MESSAGE.INVALID_AUTHORIZATION_TOKEN
+            );
+            res
+              .status(CONSTANTS.HTTP_RESPONSE.HTTP_FORBIDDEN)
+              .json(response);
+          } else {
+            req.user = decoded;
+            next();
+          }
+        });
+
       } else {
         response = common.commonResponse(
           CONSTANTS.RESPONSE_SUCCESS.FALSE,

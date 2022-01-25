@@ -1,9 +1,9 @@
 'use strict';
 
 const Joi = require('joi');
-const common = require('../utils/util');
-const logger = require('../logger/logger');
-const CONSTANTS = require('../constants/constant.json');
+const common = require('../../../lib/utils/util');
+const logger = require('../../../lib/logger/logger');
+const CONSTANTS = require('../../../lib/constants/constant.json');
 
 const schema = Joi.object({
   email: Joi.string()
