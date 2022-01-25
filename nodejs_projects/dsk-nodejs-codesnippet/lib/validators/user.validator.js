@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const common = require('../utils/util');
-const logger = require('../logs/logger');
+const logger = require('../logger/logger');
 const CONSTANTS = require('../constants/constant.json');
 
 const schema = Joi.object({

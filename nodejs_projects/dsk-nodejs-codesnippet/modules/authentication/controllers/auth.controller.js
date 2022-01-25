@@ -1,7 +1,7 @@
 'use strict';
 
 const common = require('../../../lib/utils/util');
-const logger = require("../../../lib/logs/logger");
+const logger = require("../../../lib/logger/logger");
 const CONSTANT = require('../../../lib/constants/constant.json');
 const User = require("../repositories/auth.repository");
 const authService = require("../servicers/auth.service");
