@@ -22,9 +22,10 @@ exports.signUp = async (req, res, next) => {
 
     const tokens = authService.getJwt(requestBody);
     const user = await User.createUser(requestBody, tokens);
+    const data = common.userAuth(user);
     response = common.commonResponse(
       CONSTANT.RESPONSE_SUCCESS.TRUE,
-      null,
+      data,
       CONSTANT.MESSAGE.SUCCESS_MESSAGE,
       null
     );
