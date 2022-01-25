@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('../logs/logger');
-const constants = require('../../static/static.json');
+const CONSTANT = require('../constants/constant.json');
 
 const connectDB = async () => {
   try {
@@ -20,15 +20,15 @@ const connectDB = async () => {
     });
 
     logger.log(
-      constants.LOGGER.INFO,
-      constants.LOGGER.SUCCESSFULLY_CONNECTED_TO_THE_DATABASE
+      CONSTANT.LOGGER.INFO,
+      CONSTANT.LOGGER.SUCCESSFULLY_CONNECTED_TO_THE_DATABASE
     );
 
   } catch (error) {
     //log the database error
     logger.log(
-      constants.LOGGER.ERROR,
-      constants.LOGGER.COULD_NOT_CONNECT_TO_THE_DATABASE +
+      CONSTANT.LOGGER.ERROR,
+      CONSTANT.LOGGER.COULD_NOT_CONNECT_TO_THE_DATABASE +
       JSON.stringify(error.message)
     );
   }
