@@ -51,7 +51,7 @@ exports.signUp = async (req, res, next) => {
 };
 
 /* POST user authentication. */
-exports.authenticate = async (req, res, next) => {
+exports.login = async (req, res, next) => {
 
   let response;
 

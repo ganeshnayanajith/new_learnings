@@ -9,7 +9,7 @@ const validator = require('../../../lib/validators/user.validator');
 router.post('/signup', validator.signUp, userController.signUp);
 
 /* POST user authentication. */
-router.post('/login', validator.login, userController.authenticate);
+router.post('/login', validator.login, userController.login);
 
 module.exports = router;
 
