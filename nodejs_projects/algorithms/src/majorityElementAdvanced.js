@@ -57,7 +57,7 @@ function inorder(root, s) {
     inorder(root.left, s);
 
     if (root.c > (s / 2))
-      console.log(root.key + "\n");
+      console.log(root.key);
 
     inorder(root.right, s);
   }
