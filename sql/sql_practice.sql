@@ -53,3 +53,66 @@ VALUES (6,102,1006,'2022-01-07');
 
 SELECT * FROM customers;
 SELECT * FROM Orders;
+
+SELECT DISTINCT Country FROM Customers;
+SELECT COUNT(DISTINCT Country) FROM Customers;
+SELECT COUNT(DISTINCT Country) AS DIFFERENT_COUNTRIES FROM Customers;
+-- MS ACCESS
+SELECT Count(*) AS DistinctCountries FROM (SELECT DISTINCT Country FROM Customers);
+--
+SELECT * FROM Customers WHERE Country='Germany' AND City='Berlin';
+SELECT * FROM Customers WHERE City='Berlin' OR City='München';
+SELECT * FROM Customers WHERE NOT Country='Germany';
+SELECT * FROM Customers WHERE Country='Germany' AND (City='Berlin' OR City='München');
+SELECT * FROM Customers WHERE NOT Country='Germany' AND NOT Country='USA';
+--
+SELECT * FROM Customers ORDER BY Country;
+SELECT * FROM Customers ORDER BY Country ASC;
+SELECT * FROM Customers ORDER BY Country DESC;
+SELECT * FROM Customers ORDER BY Country, CustomerName;
+SELECT * FROM Customers ORDER BY Country ASC, CustomerName DESC;
+--
+INSERT INTO Customers (CustomerName, City, Country) VALUES ('Cardinal', 'Stavanger', 'Norway');
+--
+SELECT CustomerName, ContactName, Address FROM Customers WHERE Address IS NOT NULL;
+SELECT CustomerName, ContactName, Address FROM Customers WHERE Address IS NULL;
+SELECT * FROM Customers WHERE Address IS NULL;
+--
+UPDATE Customers SET ContactName='Alfred Schmidt', City='Frankfurt' WHERE CustomerID=1;
+--
+DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+DELETE FROM Customers;
+-- SQL Server/MS Access
+-- SELECT TOP 3 * FROM Customers;
+-- SELECT TOP 50 PERCENT * FROM Customers;
+-- SELECT TOP 3 * FROM Customers WHERE Country='Germany';
+-- Oracle
+-- SELECT * FROM Customers FETCH FIRST 3 ROWS ONLY;
+-- SELECT * FROM Customers FETCH FIRST 50 PERCENT ROWS ONLY;
+-- SELECT * FROM Customers WHERE Country='Germany' FETCH FIRST 3 ROWS ONLY;
+-- MySQL
+SELECT * FROM Customers LIMIT 3;
+SELECT * FROM Customers WHERE Country='Germany' LIMIT 3;
+--
+SELECT MIN(Price) AS SmallestPrice FROM Products;
+SELECT MIN(CustomerID) AS SmallesID FROM customers;
+SELECT MAX(CustomerID) AS LargestID FROM customers;
+SELECT COUNT(CustomerID) FROM customers;
+SELECT SUM(CustomerID) FROM customers;
+SELECT AVG(CustomerID) FROM customers;
+--
+SELECT * FROM Customers WHERE CustomerName LIKE 'a%';
+SELECT * FROM Customers WHERE CustomerName LIKE '%a';
+SELECT * FROM Customers WHERE CustomerName LIKE '%or%';
+SELECT * FROM Customers WHERE CustomerName LIKE '_r%';
+SELECT * FROM Customers WHERE CustomerName LIKE 'a__%';
+SELECT * FROM Customers WHERE CustomerName LIKE 'a%o';
+SELECT * FROM Customers WHERE CustomerName NOT LIKE 'a%';
+SELECT * FROM Customers WHERE CustomerName LIKE '[bsp]%';
+SELECT * FROM Customers WHERE CustomerName LIKE '[a-c]%';
+SELECT * FROM Customers WHERE CustomerName LIKE '[!bsp]%';
+SELECT * FROM Customers WHERE CustomerName NOT LIKE '[bsp]%';
+--
+SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK');
+SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK');
+SELECT * FROM Customers WHERE CustomerID IN (SELECT CustomerID FROM Orders);
