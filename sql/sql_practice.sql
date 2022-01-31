@@ -252,3 +252,17 @@ WHERE CustomerID = ANY
 SELECT ALL CustomerID, CustomerName
 FROM Customers
 WHERE TRUE;
+--
+SELECT CustomerID, CustomerName
+FROM Customers
+WHERE CustomerID = ALL (SELECT CustomerID FROM Orders WHERE ShipperID > 10000);
+--
+-- SELECT * INTO CustomersBackup2017 FROM Customers;
+-- SELECT * INTO newtable FROM oldtable WHERE 1 = 0;
+-- INSERT INTO Customers (CustomerName, City, Country) SELECT SupplierName, City, Country FROM Suppliers;
+
+--
+Select CustomerID, upper(CustomerName) from customers;
+Select CustomerID, substring(CustomerName,1,3) from customers;
+Select CustomerID, INSTR(CustomerName, BINARY'a') from customers;
+Select CustomerID, RTRIM(CustomerName) from customers;
