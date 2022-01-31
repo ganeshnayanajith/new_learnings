@@ -1,5 +1,6 @@
 DROP TABLE Customers;
 DROP TABLE Orders;
+DROP TABLE shippers;
 
 CREATE TABLE Customers (
 	CustomerID int NOT NULL AUTO_INCREMENT,
@@ -19,6 +20,12 @@ CREATE TABLE Orders (
     ShipperID int NOT NULL,
     OrderDate DATE,
     PRIMARY KEY (OrderID)
+);
+
+CREATE TABLE Shippers (
+	ShipperID int NOT NULL,
+    ShipperName varchar(255),
+    PRIMARY KEY (ShipperID)
 );
 
 INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country) 
@@ -51,8 +58,26 @@ VALUES (5,101,1005,'2022-01-06');
 INSERT INTO Orders (CustomerID, EmployeeID, ShipperID, OrderDate) 
 VALUES (6,102,1006,'2022-01-07');
 
-SELECT * FROM customers;
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1000,'Speedy Express');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1001,'United Package ');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1002,'Federal Shipping ');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1003,'United Express');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1004,'Package Express');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1005,'Federal Express');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1006,'Shipping Express');
+INSERT INTO Shippers (ShipperID, ShipperName) 
+VALUES (1007,'Express Express');
+
+SELECT * FROM Customers;
 SELECT * FROM Orders;
+SELECT * FROM Shippers;
 
 SELECT DISTINCT Country FROM Customers;
 SELECT COUNT(DISTINCT Country) FROM Customers;
@@ -116,3 +141,114 @@ SELECT * FROM Customers WHERE CustomerName NOT LIKE '[bsp]%';
 SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK');
 SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK');
 SELECT * FROM Customers WHERE CustomerID IN (SELECT CustomerID FROM Orders);
+--
+SELECT * FROM Customers WHERE CustomerID BETWEEN 2 AND 5;
+SELECT * FROM Customers WHERE CustomerID NOT BETWEEN 2 AND 5;
+--
+SELECT * FROM Customers WHERE CustomerID BETWEEN 1 AND 7 AND CustomerID NOT IN (SELECT CustomerID FROM Orders);
+--
+SELECT * FROM Customers WHERE CustomerName BETWEEN 'Alfreds Futterkiste' AND 'Antonio Moreno Taquería' ORDER BY CustomerName;
+SELECT * FROM Customers WHERE CustomerName NOT BETWEEN 'Alfreds Futterkiste' AND 'Antonio Moreno Taquería' ORDER BY CustomerName;
+SELECT * FROM Orders WHERE OrderDate BETWEEN '2022-01-03' AND '2022-01-05';
+--
+SELECT CustomerID AS ID, CustomerName AS "Customer Name" FROM Customers;
+SELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS Address FROM Customers;
+SELECT o.OrderID, o.OrderDate, c.CustomerName FROM Customers AS c, Orders AS o WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName FROM Customers, Orders WHERE Customers.CustomerName='Around the Horn' AND Customers.CustomerID=Orders.CustomerID;
+--
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate FROM Orders INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate FROM Orders INNER JOIN Customers ON Customers.CustomerID=Orders.CustomerID;
+--
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ( (Orders INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID) INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+--
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+--
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+--
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Customers
+RIGHT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+--
+-- SELECT Customers.CustomerName, Orders.OrderID
+-- FROM Customers
+-- FULL JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+-- ORDER BY Customers.CustomerName;
+--
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID AND A.City = B.City
+ORDER BY A.City;
+--
+-- SELECT City FROM Customers
+-- UNION
+-- SELECT City FROM Suppliers
+-- ORDER BY City;
+SELECT CustomerID FROM Customers
+UNION
+SELECT ShipperID FROM Orders;
+--
+SELECT CustomerID FROM Customers
+UNION ALL
+SELECT OrderID FROM Orders;
+--
+SELECT CustomerID FROM Customers
+WHERE Country='Germany'
+UNION
+SELECT ShipperID FROM Orders;
+--
+SELECT CustomerID FROM Customers
+WHERE Country='Germany'
+UNION ALL
+SELECT OrderID FROM Orders;
+--
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;
+--
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID);
+--
+SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders 
+FROM Orders
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName;
+--
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 1;
+--
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 0
+ORDER BY COUNT(CustomerID) DESC;
+--
+SELECT Customers.CustomerName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM (Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+GROUP BY CustomerName
+HAVING COUNT(Orders.OrderID) > 1;
+--
+SELECT *
+FROM Customers
+WHERE EXISTS (SELECT * FROM Orders WHERE Orders.CustomerID = Customers.CustomerID);
+--
+SELECT CustomerID, CustomerName
+FROM Customers
+WHERE CustomerID = ANY
+  (SELECT CustomerID
+  FROM Orders);
+--
+SELECT ALL CustomerID, CustomerName
+FROM Customers
+WHERE TRUE;
