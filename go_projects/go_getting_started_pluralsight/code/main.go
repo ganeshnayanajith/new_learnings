@@ -6,14 +6,20 @@ const (
 	/* first  = iota + 6
 	second = 2 << iota */
 
-	first = iota + 6
+	first = iota
 	second
+)
+
+const (
+	third = iota
+	fourth
 )
 
 func main() {
 
 	fmt.Println("Program running..")
-	fmt.Println(first, second)
+
+	fmt.Println(first, second, third, fourth)
 
 	/* const c int = 3
 	fmt.Println(c + 3)
