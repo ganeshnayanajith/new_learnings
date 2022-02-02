@@ -2,9 +2,9 @@ package main
 
 import "fmt"
 
-const (
-	/* first  = iota + 6
-	second = 2 << iota */
+/* const (
+	first  = iota + 6
+	second = 2 << iota
 
 	first = iota
 	second
@@ -13,13 +13,50 @@ const (
 const (
 	third = iota
 	fourth
-)
+) */
 
 func main() {
 
 	fmt.Println("Program running..")
 
-	fmt.Println(first, second, third, fourth)
+	/* slice := []int{1, 2, 3}
+	fmt.Println(slice)
+
+	slice = append(slice, 4)
+	fmt.Println(slice)
+
+	slice = append(slice, 5, 6, 7)
+	fmt.Println(slice)
+
+	slice2 := slice[1:]
+	fmt.Println(slice2)
+
+	slice3 := slice[:2]
+	fmt.Println(slice3)
+
+	slice4 := slice[1:2]
+	fmt.Println(slice4) */
+
+	/* arr := [3]int{1, 2, 3}
+	slice := arr[:]
+	fmt.Println(arr, slice)
+
+	arr[1] = 42
+	slice[2] = 27
+	fmt.Println(arr, slice) */
+
+	/* arr := [3]int{1, 2, 3}
+	fmt.Println(arr) */
+
+	/* var arr [3]int
+	arr[0] = 1
+	arr[1] = 2
+	arr[2] = 3
+
+	fmt.Println(arr)
+	fmt.Println(arr[0]) */
+
+	/* fmt.Println(first, second, third, fourth) */
 
 	/* const c int = 3
 	fmt.Println(c + 3)
