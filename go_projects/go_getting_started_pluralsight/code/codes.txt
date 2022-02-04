@@ -19,6 +19,71 @@ func main() {
 
 	fmt.Println("Program running..")
 
+	/* r := HTTPRequest{Method: "GET"}
+
+	switch r.Method {
+	case "GET":
+		println("Get request")
+	case "POST":
+		println("Post request")
+	case "PUT":
+		println("Put request")
+	case "DELETE":
+		println("Delete request")
+	default:
+		println("Unhandled method")
+	} */
+
+	/* r := HTTPRequest{Method: "HEAD"}
+
+	switch r.Method {
+	case "GET":
+		println("Get request")
+	case "POST":
+		println("Post request")
+	case "PUT":
+		println("Put request")
+	case "DELETE":
+		println("Delete request")
+	default:
+		println("Unhandled method")
+	} */
+
+	/* switch r.Method {
+	case "GET":
+		println("Get request")
+		fallthrough
+	case "POST":
+		println("Post request")
+	case "PUT":
+		println("Put request")
+	case "DELETE":
+		println("Delete request")
+	} */
+
+	/* switch r.Method {
+	case "GET":
+		println("Get request")
+		fallthrough
+	case "POST":
+		println("Post request")
+	case "PUT":
+		println("Put request")
+	case "DELETE":
+		println("Delete request")
+	} */
+
+	/* switch r.Method {
+	case "GET":
+		println("Get request")
+	case "POST":
+		println("Post request")
+	case "PUT":
+		println("Put request")
+	case "DELETE":
+		println("Delete request")
+	} */
+
 	/* slice := []int{0, 1, 2, 3, 4, 5, 6}
 
 	newSlice := append(slice[:4], slice[5:]...)
