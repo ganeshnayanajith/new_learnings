@@ -1,5 +1,7 @@
 package models
 
+import "errors"
+
 type User struct {
 	ID        int
 	FirstName string
@@ -16,6 +18,9 @@ func GetUsers() []*User {
 }
 
 func AddUser(u User) (User, error) {
+	if u.ID != 0 {
+		return User{}, errors.New("cannot have an ID")
+	}
 	u.ID = nextID
 	nextID++
 	users = append(users, &u)

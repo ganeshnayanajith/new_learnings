@@ -19,6 +19,165 @@ func main() {
 
 	fmt.Println("Program running..")
 
+	/* slice := []int{0, 1, 2, 3, 4, 5, 6}
+
+	newSlice := append(slice[:4], slice[5:]...)
+
+	fmt.Println(newSlice) */
+
+
+	/* if 5 != 5 {
+		println("same")
+	} else {
+		println("not same")
+	} */
+
+	/* if 5 == 5 {
+		println("same")
+	}
+
+	if 5 != 6 {
+		println("not same")
+	} */
+
+	/* println("starting web server")
+	panic("something went wrong")
+	println("web server started") */
+
+	/* wellKnownPorts := map[string]int{"http": 80, "https": 443}
+	for _, v := range wellKnownPorts {
+		println(v)
+	} */
+
+	/* wellKnownPorts := map[string]int{"http": 80, "https": 443}
+	for k := range wellKnownPorts {
+		println(k)
+	} */
+
+	/* wellKnownPorts := map[string]int{"http": 80, "https": 443}
+	for k, v := range wellKnownPorts {
+		println(k, v)
+	} */
+
+	/* slice := []int{1, 2, 3}
+	for i := 0; i < len(slice); i++ {
+		println(slice[i])
+	} */
+
+	/* slice := []int{1, 2, 3}
+	for i, v := range slice {
+		println(i, v)
+	} */
+
+	/* var i int
+	for ; ; {
+		if i == 5 {
+			break
+		}
+		println(i)
+		i++
+	} */
+
+	/* var i int
+	for {
+		if i == 5 {
+			break
+		}
+		println(i)
+		i++
+	} */
+
+	/* for i := 0; i < 5; i++ {
+		println(i)
+	} */
+
+	/* var i int
+
+	for ; i < 5; i++ {
+		println(i)
+	} */
+
+	/* for i < 5 {
+		println(i)
+		i++
+		if i == 3 {
+			continue
+		}
+		println("continuing")
+
+	} */
+
+	/* for i < 5 {
+		println(i)
+		i++
+		if i == 3 {
+			break
+		}
+	} */
+
+	/* for i < 5 {
+		println(i)
+		i++
+	} */
+
+	/* fmt.Println("Program running..") */
+
+	/* port := 3000
+	_, err := startWebServer(port, 2)
+	fmt.Println(err) */
+	/* port, err := startWebServer(port, 2)
+	fmt.Println(port, err) */
+	/* err := startWebServer(port, 2)
+	fmt.Println(err) */
+	/* isStarted := startWebServer(port, 2)
+	fmt.Println(isStarted) */
+	/* startWebServer(port, 2) */
+	/* startWebServer(port) */
+
+	/* u := models.User{
+		ID:        2,
+		FirstName: "Ganesh",
+		LastName:  "Nayanajith",
+	}
+
+	fmt.Println(u) */
+
+
+
+	/* func startWebServer(port, noOfRetries int) (int, error) {
+	fmt.Println("Server started on port : ", port)
+	fmt.Println("Number of retries : ", noOfRetries)
+	return port, nil
+	} */
+
+	/* func startWebServer(port, noOfRetries int) error {
+		fmt.Println("Server started on port : ", port)
+		fmt.Println("Number of retries : ", noOfRetries)
+		return errors.New("something went wrong")
+	} */
+
+	/* func startWebServer(port, noOfRetries int) error {
+		fmt.Println("Server started on port : ", port)
+		fmt.Println("Number of retries : ", noOfRetries)
+		return nil
+	} */
+
+	/* func startWebServer(port, noOfRetries int) bool {
+		fmt.Println("Server started on port : ", port)
+		fmt.Println("Number of retries : ", noOfRetries)
+		return true
+	} */
+
+	/* func startWebServer(port, noOfRetries int) {
+		fmt.Println("Server started on port : ", port)
+		fmt.Println("Number of retries : ", noOfRetries)
+	} */
+
+	/* func startWebServer(port int) {
+		fmt.Println("Server started on port : ", port)
+	} */
+
+
 	/* type user struct {
 		ID        int
 		FirstName string
