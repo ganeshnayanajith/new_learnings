@@ -1,0 +1,3 @@
+module ganeshnayanajith/new_learnings/tree/main/go_projects/creating_web_services_with_go_pluralsight/webservice
+
+go 1.17
