@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import yelp from '../api/yelp';
@@ -8,12 +8,13 @@ const SearchScreen = () => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const searchAPI = async () => {
+  const searchAPI = async (searchTerm) => {
+    console.log('searching...');
     try {
       const response = await yelp.get('/search', {
         params: {
           limit: 50,
-          term,
+          term: searchTerm,
           location: 'san jose'
         }
       });
@@ -24,12 +25,23 @@ const SearchScreen = () => {
 
   };
 
+  // call search API when component is first rendered. following is the bad code!
+  // searchAPI('pasta');
+  // better way
+  useEffect(() => {
+    searchAPI('pasta');
+  }, []);
+
   return (
     <View>
       <SearchBar
         term={term}
         onTermChange={setTerm}
-        onTermSubmit={searchAPI}
+        onTermSubmit={() => searchAPI(term)}
+        // onTermChange={setTerm}
+        // onTermSubmit={searchAPI}
+        // onTermChange={newTerm => setTerm(newTerm)}
+        // onTermSubmit={() => searchAPI()}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       <Text>We have found {results.length} results</Text>
