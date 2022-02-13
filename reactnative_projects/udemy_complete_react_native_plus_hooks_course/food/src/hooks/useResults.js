@@ -16,6 +16,7 @@ export default () => {
           location: 'California'
         }
       });
+      console.log(`${response.data.businesses.length} records found`);
       setResults(response.data.businesses);
     } catch (err) {
       setErrorMessage('something went wrong');
