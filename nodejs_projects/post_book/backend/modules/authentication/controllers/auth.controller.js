@@ -43,7 +43,7 @@ exports.signUp = async (req, res, next) => {
   } catch (e) {
     logger.log(
       CONSTANT.LOGGER.ERROR,
-      CONSTANT.LOGGER.SIGN_UP_API_END + e.message
+      CONSTANT.LOGGER.SIGN_UP_API_FAILED + e.message
     );
     response = common.commonResponse(
       CONSTANT.RESPONSE_SUCCESS.FALSE,
@@ -89,7 +89,7 @@ exports.login = async (req, res, next) => {
   } catch (e) {
     logger.log(
       CONSTANT.LOGGER.ERROR,
-      CONSTANT.LOGGER.LOGIN_API_END + CONSTANT.MESSAGE.UNAUTHORIZED
+      CONSTANT.LOGGER.LOGIN_API_FAILED + CONSTANT.MESSAGE.UNAUTHORIZED
     );
     response = common.commonResponse(
       CONSTANT.RESPONSE_SUCCESS.FALSE,

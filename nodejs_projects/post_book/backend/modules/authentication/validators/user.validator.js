@@ -70,7 +70,7 @@ exports.signUp = async (req, res, next) => {
   } catch (err) {
     logger.log(
       CONSTANTS.LOGGER.ERROR,
-      CONSTANTS.LOGGER.SIGN_UP_API_END +
+      CONSTANTS.LOGGER.SIGN_UP_API_FAILED +
       JSON.stringify(err.details[0].message)
     );
     const response = common.commonResponse(
@@ -96,7 +96,7 @@ exports.login = async (req, res, next) => {
   } catch (err) {
     logger.log(
       CONSTANTS.LOGGER.ERROR,
-      CONSTANTS.LOGGER.LOGIN_API_END +
+      CONSTANTS.LOGGER.LOGIN_API_FAILED +
       JSON.stringify(err.details[0].message)
     );
     const response = common.commonResponse(

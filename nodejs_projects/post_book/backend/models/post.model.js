@@ -10,6 +10,11 @@ const postSchema = new mongoose.Schema({
     description: {
       type: String,
       required: true
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     }
   },
   {

@@ -6,5 +6,6 @@ const postController = require('../controllers/post.controller');
 const postValidator = require('../validators/post.validator');
 
 router.post('/', postValidator.create, postController.create);
+router.get('/', postController.getAll);
 
 module.exports = router;

@@ -2,7 +2,7 @@
 
 const postRepository = require('../repositories/post.repository');
 
-const create = async (data) => {
+exports.create = async (data) => {
 
   try {
 
@@ -21,7 +21,21 @@ const create = async (data) => {
 
 };
 
+exports.getAll = async (userId) => {
 
-module.exports = {
-  create
+  try {
+
+    const posts = await postRepository.findAll(userId);
+
+    const result = {
+      status: true,
+      posts
+    };
+
+    return Promise.resolve(result);
+
+  } catch (e) {
+    return Promise.reject(e);
+  }
+
 };

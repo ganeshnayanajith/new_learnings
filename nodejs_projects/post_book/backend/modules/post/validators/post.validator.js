@@ -57,7 +57,7 @@ exports.create = async (req, res, next) => {
   } catch (err) {
     logger.log(
       CONSTANTS.LOGGER.ERROR,
-      CONSTANTS.LOGGER.POST_CREATE_API_END +
+      CONSTANTS.LOGGER.POST_CREATE_API_FAILED +
       JSON.stringify(err.details[0].message)
     );
     const response = common.commonResponse(
