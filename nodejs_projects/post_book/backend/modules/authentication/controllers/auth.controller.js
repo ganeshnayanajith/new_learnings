@@ -5,6 +5,7 @@ const logger = require("../../../lib/logger/logger");
 const CONSTANT = require('../../../lib/constants/constant.json');
 const authRepository = require("../repositories/auth.repository");
 const authService = require("../servicers/auth.service");
+const mongoose = require('mongoose');
 
 /* POST user signUp */
 exports.signUp = async (req, res, next) => {
@@ -20,8 +21,12 @@ exports.signUp = async (req, res, next) => {
       CONSTANT.LOGGER.SIGN_UP_API_START + JSON.stringify(requestBody)
     );
 
-    const tokens = authService.getJwt(requestBody);
-    const user = await authRepository.createUser(requestBody, tokens);
+    const additionalData = { _id: mongoose.Types.ObjectId() };
+
+    const userData = { ...requestBody, ...additionalData };
+
+    const tokens = authService.getJwt(userData);
+    const user = await authRepository.createUser(userData, tokens);
     const data = common.userAuth(user);
     response = common.commonResponse(
       CONSTANT.RESPONSE_SUCCESS.TRUE,

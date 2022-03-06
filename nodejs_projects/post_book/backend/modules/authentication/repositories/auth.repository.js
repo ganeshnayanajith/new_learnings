@@ -40,6 +40,7 @@ exports.createUser = async (body, tokens) => {
       } else {
         resolve(
           User.create({
+            _id: body._id,
             email: body.email,
             password: hashedPassword,
             accessToken: tokens[0]
