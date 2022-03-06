@@ -1,0 +1,72 @@
+{
+  "HTTP_RESPONSE": {
+    "HTTP_SUCCESS": 200,
+    "HTTP_CREATED": 201,
+    "HTTP_NOT_FOUND": 404,
+    "HTTP_ERROR": 401,
+    "HTTP_BAD_REQUEST": 400,
+    "HTTP_FORBIDDEN": 403,
+    "HTTP_INTERNAL_SERVER_ERROR": 500,
+    "HTTP_VALIDATION_ERROR": 422
+  },
+  "RESPONSE_SUCCESS": {
+    "TRUE": true,
+    "FALSE": false
+  },
+  "VALIDATION": {
+    "ANY_EMPTY": "any.empty",
+    "STRING_BASE": "string.base",
+    "ANY_REQUIRED": "any.required",
+    "STRING_EMAIL": "string.email",
+    "JWT_MALFORMED": "jwt malformed",
+    "JWT_EXPIRED": "jwt expired",
+    "STRING_MIN": "string.min",
+    "STRING_MAX": "string.max",
+    "ARRAY_INCLUDE_ONE": "array.includesOne",
+    "NUMBER_BASE": "number.base",
+    "ARRAY_MIN": "array.min",
+    "ARRAY_MAX": "array.max",
+    "ARRAY_NOT_EMPTY": "array.includesRequiredUnknowns"
+  },
+  "LOGGER": {
+    "INFO": "info",
+    "ERROR": "error",
+    "COULD_NOT_CONNECT_TO_THE_DATABASE": "COULD NOT CONNECT TO THE MONGO DB PLEASE CHECK YOUR URI | ",
+    "SUCCESSFULLY_CONNECTED_TO_THE_DATABASE": "SUCCESSFULLY CONNECTED TO THE DATABASE",
+    "LOGIN_API_START": "LOGIN_API_START | ",
+    "LOGIN_API_SUCCESS": "LOGIN_API_SUCCESS | ",
+    "LOGIN_API_END": "LOGIN_API_END | ",
+    "SIGN_UP_API_START": "SIGN_UP_API_START | ",
+    "SIGN_UP_API_SUCCESS": "SIGN_UP_API_SUCCESS | ",
+    "SIGN_UP_API_END": "SIGN_UP_API_END | ",
+    "POST_CREATE_API_START": "POST_CREATE_API_START | ",
+    "POST_CREATE_API_SUCCESS": "POST_CREATE_API_SUCCESS | ",
+    "POST_CREATE_API_END": "POST_CREATE_API_END | "
+  },
+  "MESSAGE": {
+    "EMAIL_CANNOT_BE_EMPTY": "Email can not be an empty field",
+    "EMAIL_CANNOT_BE_NUMBER": "Email can not be a number format",
+    "EMAIL_IS_REQUIRED": "Email is required",
+    "EMAIL_FORMAT_IS_INCORRECT": "Invalid email format",
+    "VALIDATION_ERROR": "Validation Error",
+    "PASSWORD_CANNOT_BE_EMPTY": "Password field can not be an empty field",
+    "PASSWORD_CANNOT_BE_NUMBER": "Password field can not be a number format",
+    "PASSWORD_IS_REQUIRED": "Password field is required",
+    "PASSWORD_SHOULD_BE_MORE_THAN_6_CHARACTERS": "PASSWORD_SHOULD_BE_MORE_THAN_6_CHARACTERS",
+    "PASSWORD_SHOULD_BE_LESS_THAN_30_CHARACTERS": "PASSWORD_SHOULD_BE_LESS_THAN_30_CHARACTERS",
+    "SUCCESS_MESSAGE": "SUCCESS",
+    "UNAUTHORIZED": "Unauthorized",
+    "INVALID_USER": "Invalid User",
+    "INVALID_EMAIL": "Invalid Email",
+    "EMAIL_ALREADY_USE": "This email already exists",
+    "INVALID_AUTHORIZATION_TOKEN": "Invalid authorization token",
+    "AUTHORIZATION_TOKEN_IS_REQUIRED": "Authorization token is required",
+    "API_ACCESS_KEYS_ARE_REQUIRED": "API access key is required",
+    "TITLE_CANNOT_BE_EMPTY": "Title can not be an empty field",
+    "TITLE_CANNOT_BE_NUMBER": "Title can not be a number format",
+    "TITLE_IS_REQUIRED": "Title is required",
+    "DESCRIPTION_CANNOT_BE_EMPTY": "Description can not be an empty field",
+    "DESCRIPTION_CANNOT_BE_NUMBER": "Description can not be a number format",
+    "DESCRIPTION_IS_REQUIRED": "Description is required"
+  }
+}

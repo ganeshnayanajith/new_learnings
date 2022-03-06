@@ -1,0 +1,22 @@
+{
+  "accessToken": "test_secret",
+  "accessTokenExpirationTime": "7d",
+  "api": {
+    "key": "test_api_key",
+    "secret": "test_api_secret",
+    "guestActions": [
+      {
+        "url": "/v1/authenticate/login",
+        "method": "POST"
+      },
+      {
+        "url": "/v1/authenticate/signup",
+        "method": "POST"
+      }
+    ]
+  },
+  "test": {
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjJkNDViNjc5NWZiZDFhMzhkZDg1OTUiLCJlbWFpbCI6ImRhbWl0aGFAa2VlbmV5ZS51cyIsIm5hbWUiOiJkYW1pdGhhIiwiaWF0IjoxNTk3MjM3MTYxLCJleHAiOjE2MjMxNTcxNjF9.B_TzACHI8aR-StM_MArrKiGVTFG6_vW0-RorVapqSJI"
+  },
+  "paginationLimit": 10
+}
