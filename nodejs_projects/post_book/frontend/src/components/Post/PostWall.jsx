@@ -6,7 +6,7 @@ import MyPostList from './MyPostList';
 let PostWall = () => {
   return (
     <React.Fragment>
-      <section className="post-wall p-3">
+      <section className="post-wall mt-3">
         <div className="container-fluid">
           <div className="grid">
             <div className="row">

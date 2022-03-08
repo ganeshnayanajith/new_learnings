@@ -42,7 +42,7 @@ let MyPostList = () => {
     <React.Fragment>
       {
         loading ? <Spinner /> : <React.Fragment>
-          <section className="contact-list">
+          <section className="my-post">
             <div className="container-fluid">
 
               <div className="row">
