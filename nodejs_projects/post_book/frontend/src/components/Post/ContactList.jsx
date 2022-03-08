@@ -10,26 +10,30 @@ let ContactList = () => {
     errorMessage: ''
   });
 
-  useEffect(async () => {
-    try {
-      setState({
-        ...state,
-        loading: true
-      });
-      let response = await ContactService.getAllContacts();
-      console.log(response.data);
-      setState({
-        ...state,
-        loading: false,
-        contacts: response.data
-      });
-    } catch (e) {
-      setState({
-        ...state,
-        loading: false,
-        errorMessage: e.message
-      })
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setState({
+          ...state,
+          loading: true
+        });
+        let response = await ContactService.getAllContacts();
+        console.log(response.data);
+        setState({
+          ...state,
+          loading: false,
+          contacts: response.data
+        });
+      } catch (e) {
+        setState({
+          ...state,
+          loading: false,
+          errorMessage: e.message
+        })
+      }
     }
+
+    fetchData();
   }, []);
 
   let { loading, contacts, errorMessage } = state;

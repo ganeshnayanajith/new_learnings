@@ -10,26 +10,30 @@ let MyPostList = () => {
     errorMessage: ''
   });
 
-  useEffect(async () => {
-    try {
-      setState({
-        ...state,
-        loading: true
-      });
-      let response = await PostService.getAllPosts();
-      console.log(response.data);
-      setState({
-        ...state,
-        loading: false,
-        posts: response.data.data.posts
-      });
-    } catch (e) {
-      setState({
-        ...state,
-        loading: false,
-        errorMessage: e.message
-      })
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setState({
+          ...state,
+          loading: true
+        });
+        let response = await PostService.getAllPosts();
+        console.log(response.data);
+        setState({
+          ...state,
+          loading: false,
+          posts: response.data.data.posts
+        });
+      } catch (e) {
+        setState({
+          ...state,
+          loading: false,
+          errorMessage: e.message
+        })
+      }
     }
+
+    fetchData();
   }, []);
 
   let { loading, posts, errorMessage } = state;
