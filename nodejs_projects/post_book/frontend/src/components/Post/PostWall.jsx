@@ -16,40 +16,7 @@ let PostWall = () => {
               </div>
 
               <div className="col-md-5">
-
-                <div className="card">
-                  <div className="card-header">
-                    <h3>New Post</h3>
-                  </div>
-                  <div className="card-body">
-                    <form>
-                      <div>
-                        <input type="text" className="form-control" placeholder="Title" />
-                      </div>
-                      <div>
-                        <input type="text" className="form-control  mt-2" placeholder="Description" />
-                      </div>
-                      <div>
-                        <div className="row  mt-3">
-                          <div className="col-md-4">
-                            <p>Select Image</p>
-                          </div>
-                          <div className="col-md-3">
-                            <input type="button" className="btn btn-outline-dark" value="Select" />
-                          </div>
-                          <div className="col-md-5">
-                            <input type="button" className="btn btn-primary" value="Post" />
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-
-                <div className="row mt-4">
-                  <MyPostList />
-                </div>
-
+                <MyPostList />
               </div>
 
               <div className="col-md-4">

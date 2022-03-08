@@ -39,7 +39,7 @@ let LoremPicSumPostList = () => {
       {
         loading ? <Spinner /> : <React.Fragment>
           <section className="contact-list">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row">
                 <h2>Lorem Pic Sum Posts</h2>
                 {
