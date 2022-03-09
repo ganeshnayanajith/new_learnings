@@ -8,7 +8,7 @@ exports.create = async (data) => {
 };
 
 exports.findAll = async (createdBy) => {
-  return Post.find({ createdBy: mongoose.Types.ObjectId(createdBy) });
+  return Post.find({ createdBy: mongoose.Types.ObjectId(createdBy) }).sort({ createdAt: -1 });
 };
 
 exports.delete = async (postId) => {
