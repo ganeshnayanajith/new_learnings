@@ -39,3 +39,22 @@ exports.getAll = async (userId) => {
   }
 
 };
+
+exports.delete = async (postId) => {
+
+  try {
+
+    const post = await postRepository.delete(postId);
+
+    const result = {
+      status: true,
+      post
+    };
+
+    return Promise.resolve(result);
+
+  } catch (e) {
+    return Promise.reject(e);
+  }
+
+};

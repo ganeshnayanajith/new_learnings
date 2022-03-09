@@ -10,3 +10,7 @@ exports.create = async (data) => {
 exports.findAll = async (createdBy) => {
   return Post.find({ createdBy: mongoose.Types.ObjectId(createdBy) });
 };
+
+exports.delete = async (postId) => {
+  return Post.findByIdAndDelete(postId);
+};
