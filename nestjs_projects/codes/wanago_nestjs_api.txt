@@ -1,0 +1,81 @@
+import {
+  Body,
+  Req,
+  Controller,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthenticationService } from './authentication.service';
+import { RegisterDto } from './dto/register.dto';
+import { RequestWithUser } from './requestWithUser.interface';
+import { LocalAuthenticationGuard } from './localAuthentication.guard';
+
+@Controller('authentication')
+export class AuthenticationController {
+  constructor(private readonly authenticationService: AuthenticationService) {}
+
+  @Post('register')
+  async register(@Body() registrationData: RegisterDto) {
+    return this.authenticationService.register(registrationData);
+  }
+
+  @HttpCode(200)
+  @UseGuards(LocalAuthenticationGuard)
+  @Post('log-in')
+  async logIn(@Req() request: RequestWithUser) {
+    const user = request.user;
+    user.password = undefined;
+    return user;
+  }
+}
+
+
+------------------------------------------------------------------------------------------Extending the BaseExceptionFilter
+
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import * as cookieParser from 'cookie-parser';
+import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
+ 
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+ 
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new ExceptionsLoggerFilter(httpAdapter));
+ 
+  app.use(cookieParser());
+  await app.listen(3000);
+}
+bootstrap();
+
+@Get(':id')
+@UseFilters(ExceptionsLoggerFilter)
+getPostById(@Param('id') id: string) {
+  return this.postsService.getPostById(Number(id));
+}
+
+
+-------------------------------------------------------------------------------------------------Implementing the ExceptionFilter interface
+
+import { ExceptionFilter, Catch, ArgumentsHost, NotFoundException } from '@nestjs/common';
+import { Request, Response } from 'express';
+ 
+@Catch(NotFoundException)
+export class HttpExceptionFilter implements ExceptionFilter {
+  catch(exception: NotFoundException, host: ArgumentsHost) {
+    const context = host.switchToHttp();
+    const response = context.getResponse<Response>();
+    const request = context.getRequest<Request>();
+    const status = exception.getStatus();
+    const message = exception.getMessage();
+ 
+    response
+      .status(status)
+      .json({
+        message,
+        statusCode: status,
+        time: new Date().toISOString(),
+      });
+  }
+}
