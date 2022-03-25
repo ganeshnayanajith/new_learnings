@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/createPost.dto';
 import { Post } from './post.entity';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PostNotFoundException } from './exception/postNotFund.exception';
 
 @Injectable()
 export class PostsService {
@@ -20,7 +21,8 @@ export class PostsService {
     if (post) {
       return post;
     }
-    throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+    // throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+    throw new PostNotFoundException(id);
   }
 
   async createPost(post: CreatePostDto) {
@@ -35,13 +37,15 @@ export class PostsService {
     if (updatedPost) {
       return updatedPost;
     }
-    throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+    // throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+    throw new PostNotFoundException(id);
   }
 
   async deletePost(id: number) {
     const deleteResponse = await this.postsRepository.delete(id);
     if (!deleteResponse.affected) {
-      throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+      // throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+      throw new PostNotFoundException(id);
     }
   }
 }
