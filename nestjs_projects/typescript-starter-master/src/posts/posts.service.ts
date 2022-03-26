@@ -14,12 +14,12 @@ export class PostsService {
   ) {}
 
   getAllPosts() {
-    return this.postsRepository.find({ relations: ['author'] });
+    return this.postsRepository.find({ relations: ['author', 'categories'] });
   }
 
   async getPostById(id: number) {
     const post = await this.postsRepository.findOne(id, {
-      relations: ['author'],
+      relations: ['author', 'categories'],
     });
     if (post) {
       return post;
@@ -40,7 +40,7 @@ export class PostsService {
   async updatePost(id: number, post: UpdatePostDto) {
     await this.postsRepository.update(id, post);
     const updatedPost = await this.postsRepository.findOne(id, {
-      relations: ['author'],
+      relations: ['author', 'categories'],
     });
     if (updatedPost) {
       return updatedPost;
