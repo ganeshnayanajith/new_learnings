@@ -274,3 +274,4 @@ describe('The AuthenticationService', () => {
 -------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------
 The  key property uniquely identifies the file in the bucket.
+Thanks to working directly with streams, we don’t have to download the file into the memory in our server.

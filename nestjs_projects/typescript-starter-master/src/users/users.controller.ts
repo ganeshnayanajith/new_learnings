@@ -1,8 +1,11 @@
 import { UsersService } from './users.service';
 import {
   Controller,
+  Get,
+  Param,
   Post,
   Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -10,7 +13,8 @@ import {
 import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.guard';
 import { RequestWithUser } from '../authentication/requestWithUser.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
+import { Express, Response } from 'express';
+import { FindOneParams } from '../utils/findOneParams';
 
 @Controller('users')
 export class UsersController {
@@ -42,5 +46,19 @@ export class UsersController {
       file.buffer,
       file.originalname,
     );
+  }
+
+  @Get('files/:id')
+  @UseGuards(JwtAuthenticationGuard)
+  async getPrivateFile(
+    @Req() request: RequestWithUser,
+    @Param() { id }: FindOneParams,
+    @Res() res: Response,
+  ) {
+    const file = await this.usersService.getPrivateFile(
+      request.user.id,
+      Number(id),
+    );
+    file.stream.pipe(res);
   }
 }
