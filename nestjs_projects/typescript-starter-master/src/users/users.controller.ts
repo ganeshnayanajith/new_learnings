@@ -61,4 +61,10 @@ export class UsersController {
     );
     file.stream.pipe(res);
   }
+
+  @Get('files')
+  @UseGuards(JwtAuthenticationGuard)
+  async getAllPrivateFiles(@Req() request: RequestWithUser) {
+    return this.usersService.getAllPrivateFiles(request.user.id);
+  }
 }
