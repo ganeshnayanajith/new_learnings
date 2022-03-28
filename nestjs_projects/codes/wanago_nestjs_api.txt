@@ -276,3 +276,5 @@ describe('The AuthenticationService', () => {
 The  key property uniquely identifies the file in the bucket.
 Thanks to working directly with streams, we don’t have to download the file into the memory in our server.
 The default expiration time of a presigned URL is 15 minutes. We could change it by adding an  Expires parameter.
+
+To refresh the token, the user needs to call a separate endpoint, called  /refresh. This time, the refresh token is taken from the cookies and sent to the API. If it is valid and not expired, the user receives the new access token. Thanks to that, there is no need to provide the username and password again.
