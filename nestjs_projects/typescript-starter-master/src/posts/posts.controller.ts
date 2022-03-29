@@ -1,5 +1,8 @@
 import {
   Body,
+  CacheInterceptor,
+  CacheKey,
+  CacheTTL,
   Controller,
   Delete,
   Get,
@@ -8,6 +11,7 @@ import {
   Post,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/createPost.dto';
@@ -15,11 +19,15 @@ import { UpdatePostDto } from './dto/updatePost.dto';
 import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.guard';
 import { FindOneParams } from '../utils/findOneParams';
 import { RequestWithUser } from '../authentication/requestWithUser.interface';
+import { GET_POSTS_CACHE_KEY } from './postsCacheKey.constant';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey(GET_POSTS_CACHE_KEY)
+  @CacheTTL(120)
   @Get()
   getAllPosts() {
     return this.postsService.getAllPosts();

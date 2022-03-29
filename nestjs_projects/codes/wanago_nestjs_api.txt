@@ -271,10 +271,247 @@ describe('The AuthenticationService', () => {
     })
   })
 });
--------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------Implementing in-memory cache
+npm install cache-manager @types/cache-manager
+
+automatic
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import { CacheModule, Module } from '@nestjs/common';
+import PostsController from './posts.controller';
+import PostsService from './posts.service';
+import Post from './post.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { SearchModule } from '../search/search.module';
+import PostsSearchService from './postsSearch.service';
+ 
+@Module({
+  imports: [
+    CacheModule.register(),
+    TypeOrmModule.forFeature([Post]),
+    SearchModule,
+  ],
+  controllers: [PostsController],
+  providers: [PostsService, PostsSearchService],
+})
+export class PostsModule {}
+
+------------------------------------------
+
+CacheModule.register({
+  ttl: 5,
+  max: 100
+});
+
+------------------------------------------
+
+import {
+  Controller,
+  Get,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  Query, CacheInterceptor,
+} from '@nestjs/common';
+import PostsService from './posts.service';
+import { PaginationParams } from '../utils/types/paginationParams';
+ 
+@Controller('posts')
+@UseInterceptors(ClassSerializerInterceptor)
+export default class PostsController {
+  constructor(
+    private readonly postsService: PostsService
+  ) {}
+ 
+  @UseInterceptors(CacheInterceptor)
+  @Get()
+  async getPosts(
+    @Query('search') search: string,
+    @Query() { offset, limit, startId }: PaginationParams
+  ) {
+    if (search) {
+      return this.postsService.searchForPosts(search, offset, limit, startId);
+    }
+    return this.postsService.getAllPosts(offset, limit, startId);
+  }
+  // ...
+}
+
+------------------------------------------
+
+
+manual
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import Post from './post.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import PostsSearchService from './postsSearch.service';
+ 
+@Injectable()
+export default class PostsService {
+  constructor(
+    @InjectRepository(Post)
+    private postsRepository: Repository<Post>,
+    private postsSearchService: PostsSearchService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
+  ) {}
+ 
+  // ...
+ 
+}
+
+------------------------------------------
+
+export const GET_POSTS_CACHE_KEY = 'GET_POSTS_CACHE';
+
+------------------------------------------
+
+@UseInterceptors(CacheInterceptor)
+@CacheKey(GET_POSTS_CACHE_KEY)
+@CacheTTL(120)
+@Get()
+async getPosts(
+  @Query('search') search: string,
+  @Query() { offset, limit, startId }: PaginationParams
+) {
+  if (search) {
+    return this.postsService.searchForPosts(search, offset, limit, startId);
+  }
+  return this.postsService.getAllPosts(offset, limit, startId);
+}
+
+------------------------------------------
+
+original track by method
+
+ protected trackBy(context: ExecutionContext): string | undefined {
+    const httpAdapter = this.httpAdapterHost.httpAdapter;
+    const isHttpApp = httpAdapter && !!httpAdapter.getRequestMethod;
+    const cacheMetadata = this.reflector.get(
+      CACHE_KEY_METADATA,
+      context.getHandler(),
+    );
+
+    if (!isHttpApp || cacheMetadata) {
+      return cacheMetadata;
+    }
+
+    const request = context.getArgByIndex(0);
+    if (!this.isRequestCacheable(context)) {
+      return undefined;
+    }
+    return httpAdapter.getRequestUrl(request);
+  }
+
+------------------------------------------
+
+httpCache.interceptor.ts
+
+import { CACHE_KEY_METADATA, CacheInterceptor, ExecutionContext, Injectable } from '@nestjs/common';
+ 
+@Injectable()
+export class HttpCacheInterceptor extends CacheInterceptor {
+  trackBy(context: ExecutionContext): string | undefined {
+    const cacheKey = this.reflector.get(
+      CACHE_KEY_METADATA,
+      context.getHandler(),
+    );
+ 
+    if (cacheKey) {
+      const request = context.switchToHttp().getRequest();
+      return `${cacheKey}-${request._parsedUrl.query}`;
+    }
+ 
+    return super.trackBy(context);
+  }
+}
+
+------------------------------------------
+
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import CreatePostDto from './dto/createPost.dto';
+import Post from './post.entity';
+import UpdatePostDto from './dto/updatePost.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import PostNotFoundException from './exceptions/postNotFound.exception';
+import User from '../users/user.entity';
+import PostsSearchService from './postsSearch.service';
+import { Cache } from 'cache-manager';
+import { GET_POSTS_CACHE_KEY } from './postsCacheKey.constant';
+ 
+@Injectable()
+export default class PostsService {
+  constructor(
+    @InjectRepository(Post)
+    private postsRepository: Repository<Post>,
+    private postsSearchService: PostsSearchService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
+  ) {}
+ 
+  async clearCache() {
+    const keys: string[] = await this.cacheManager.store.keys();
+    keys.forEach((key) => {
+      if (key.startsWith(GET_POSTS_CACHE_KEY)) {
+        this.cacheManager.del(key);
+      }
+    })
+  }
+ 
+  async createPost(post: CreatePostDto, user: User) {
+    const newPost = await this.postsRepository.create({
+      ...post,
+      author: user
+    });
+    await this.postsRepository.save(newPost);
+    this.postsSearchService.indexPost(newPost);
+    await this.clearCache();
+    return newPost;
+  }
+ 
+  async updatePost(id: number, post: UpdatePostDto) {
+    await this.postsRepository.update(id, post);
+    const updatedPost = await this.postsRepository.findOne(id, { relations: ['author'] });
+    if (updatedPost) {
+      await this.postsSearchService.update(updatedPost);
+      await this.clearCache();
+      return updatedPost;
+    }
+    throw new PostNotFoundException(id);
+  }
+ 
+  async deletePost(id: number) {
+    const deleteResponse = await this.postsRepository.delete(id);
+    if (!deleteResponse.affected) {
+      throw new PostNotFoundException(id);
+    }
+    await this.postsSearchService.remove(id);
+    await this.clearCache();
+  }
+ 
+  // ...
+}
+
+------------------------------------------
+
+-------------------------------------------------------------------------------------------------Redis
+
+
 -------------------------------------------------------------------------------------------------
 The  key property uniquely identifies the file in the bucket.
 Thanks to working directly with streams, we don’t have to download the file into the memory in our server.
 The default expiration time of a presigned URL is 15 minutes. We could change it by adding an  Expires parameter.
 
 To refresh the token, the user needs to call a separate endpoint, called  /refresh. This time, the refresh token is taken from the cookies and sent to the API. If it is valid and not expired, the user receives the new access token. Thanks to that, there is no need to provide the username and password again.
+
+NestJS will store the response of the getPosts method separately for every combination of query params. Thanks to that, calling /posts?search=Hello and /posts?search=World can yield different responses.
+Using cache might sometimes cause us to return stale data, though.
+
+
+An important concept to grasp is that the cache manager provides a key-value store. We can:
+
+retrieve the values using the cacheManager.get('key') method,
+add items using cacheManager.set('key', 'value),
+remove elements with cacheManager.del('key'),
+clear the whole cache using cacheManager.reset().
