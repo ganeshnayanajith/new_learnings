@@ -25,8 +25,16 @@ export class PostsService {
     });
   }
 
-  getAllPosts() {
-    return this.postsRepository.find({ relations: ['author', 'categories'] });
+  async getAllPosts() {
+    // return this.postsRepository.find({ relations: ['author', 'categories'] });
+    let posts = await this.cacheManager.get(GET_POSTS_CACHE_KEY);
+    if (!posts) {
+      posts = await this.postsRepository.find({
+        relations: ['author', 'categories'],
+      });
+      await this.cacheManager.set(GET_POSTS_CACHE_KEY, posts);
+    }
+    return posts;
   }
 
   async getPostById(id: number) {
