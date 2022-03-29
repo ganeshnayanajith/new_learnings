@@ -497,6 +497,101 @@ export default class PostsService {
 
 -------------------------------------------------------------------------------------------------Redis
 
+npm install cache-manager-redis-store
+
+------------------------------------------
+docker-compose.yml
+
+version: "3"
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+# ...
+
+version: "3"
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+ 
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+        - redis
+# ...
+
+------------------------------------------
+cacheManagerRedisStore.d.ts
+
+declare module 'cache-manager-redis-store' {
+  import { CacheStoreFactory } from '@nestjs/common/cache/interfaces/cache-manager.interface';
+ 
+  const cacheStore: CacheStoreFactory;
+ 
+  export = cacheStore;
+}
+------------------------------------------
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
+ 
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PORT: Joi.number().required(),
+        // ...
+      })
+    }),
+    // ...
+  ],
+  controllers: [],
+  providers: [],
+})
+export class AppModule {}
+------------------------------------------
+REDIS_HOST=localhost
+REDIS_PORT=6379
+------------------------------------------
+import * as redisStore from 'cache-manager-redis-store';
+import { CacheModule, Module } from '@nestjs/common';
+import PostsController from './posts.controller';
+import PostsService from './posts.service';
+import Post from './post.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { SearchModule } from '../search/search.module';
+import PostsSearchService from './postsSearch.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+ 
+@Module({
+  imports: [
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          store: redisStore,
+          host: configService.get('REDIS_HOST'),
+          port: configService.get('REDIS_PORT'),
+          ttl: 120
+        }),
+    }),
+    TypeOrmModule.forFeature([Post]),
+    SearchModule,
+  ],
+  controllers: [PostsController],
+  providers: [PostsService, PostsSearchService],
+})
+export class PostsModule {}
+------------------------------------------
+
 
 -------------------------------------------------------------------------------------------------
 The  key property uniquely identifies the file in the bucket.
@@ -515,3 +610,6 @@ retrieve the values using the cacheManager.get('key') method,
 add items using cacheManager.set('key', 'value),
 remove elements with cacheManager.del('key'),
 clear the whole cache using cacheManager.reset().
+
+
+To prevent heavy traffic from putting a strain on our API, we can also launch a cluster of Node.js processes. Such child processes share server ports and work under the same address. With that, the cluster works as a load balancer.
