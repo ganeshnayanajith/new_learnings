@@ -33,11 +33,21 @@ export default class SubscribersController {
   @Post()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(@Body() subscriber: CreateSubscriberDto) {
-    return this.subscribersService.send(
+    return this.subscribersService.emit(
       {
         cmd: 'add-subscriber',
       },
       subscriber,
     );
   }
+  // @Post()
+  // @UseGuards(JwtAuthenticationGuard)
+  // async createPost(@Body() subscriber: CreateSubscriberDto) {
+  //   return this.subscribersService.send(
+  //     {
+  //       cmd: 'add-subscriber',
+  //     },
+  //     subscriber,
+  //   );
+  // }
 }
