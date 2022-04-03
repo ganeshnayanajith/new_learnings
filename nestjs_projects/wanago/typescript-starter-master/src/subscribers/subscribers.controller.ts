@@ -9,7 +9,7 @@ import {
   Inject,
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.guard';
-import CreateSubscriberDto from './dto/createSubscriber.dto';
+import { CreateSubscriberDto } from './dto/createSubscriber.dto';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('subscribers')
