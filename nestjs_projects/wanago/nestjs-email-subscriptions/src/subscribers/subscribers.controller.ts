@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import CreateSubscriberDto from './dto/createSubscriber.dto';
+import { CreateSubscriberDto } from './dto/createSubscriber.dto';
 import { SubscribersService } from './subscribers.service';
 
 @Controller('subscribers')
