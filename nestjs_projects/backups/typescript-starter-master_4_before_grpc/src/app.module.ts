@@ -10,7 +10,6 @@ import { APP_FILTER } from '@nestjs/core';
 import { CategoriesModule } from './categories/categories.module';
 import { PrivateFilesModule } from './private-files/private-files.module';
 import { PublicFilesModule } from './public-files/public-files.module';
-import { SubscribersModule } from './subscribers/subscribers.module';
 
 @Module({
   imports: [
@@ -41,7 +40,6 @@ import { SubscribersModule } from './subscribers/subscribers.module';
     CategoriesModule,
     PublicFilesModule,
     PrivateFilesModule,
-    SubscribersModule,
   ],
   controllers: [],
   providers: [
