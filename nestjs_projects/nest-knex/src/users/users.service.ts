@@ -61,4 +61,11 @@ export class UsersService {
     const users = await this.knex.table('users').where('id', id).del();
     return { users };
   }
+
+  async multi() {
+    const users = await this.knex.schema.raw(
+      `SELECT * from users;SELECT * from users;`,
+    );
+    return { users };
+  }
 }

@@ -6,6 +6,7 @@ module.exports = {
       user: 'root',
       password: 'password',
       database: 'nest-knex',
+      multipleStatements: true,
     },
   },
 };

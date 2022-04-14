@@ -14,6 +14,7 @@ import { UsersModule } from './users/users.module';
           user: 'root',
           password: 'password',
           database: 'nest-knex',
+          multipleStatements: true,
         },
       },
     }),
