@@ -63,7 +63,7 @@ export class UsersService {
   }
 
   async multi() {
-    const users = await this.knex.schema.raw(
+    const users = await this.knex.raw(
       `SELECT * from users;SELECT * from users;`,
     );
     return { users };
