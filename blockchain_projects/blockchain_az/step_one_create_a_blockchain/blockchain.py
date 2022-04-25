@@ -5,6 +5,7 @@ import json
 import hashlib
 from flask import Flask, jsonify
 
+
 class Blockchain:
 
     def __init__(self):
@@ -55,11 +56,13 @@ class Blockchain:
             block_index += 1
         return True
 
+
 # Part 2
 
 app = Flask(__name__)
 
 blockchain = Blockchain()
+
 
 @app.route('/mine_block', methods=['GET'])
 def mine_block():
@@ -77,6 +80,7 @@ def mine_block():
     }
     return jsonify(response), 200
 
+
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
     response = {
@@ -85,4 +89,19 @@ def get_chain():
     }
     return jsonify(response), 200
 
-app.run(host='0.0.0.0', port=5000);
+
+@app.route('/is_valid', methods=['GET'])
+def is_valid():
+    is_valid = blockchain.is_chain_valid(blockchain.chain)
+    if is_valid:
+        response = {
+            'message': 'All good. The blockchain is valid.'
+        }
+    else:
+        response = {
+            'message': 'Something went wrong. The blockchain is not valid.'
+        }
+    return jsonify(response), 200
+
+
+app.run(host='0.0.0.0', port=5000)

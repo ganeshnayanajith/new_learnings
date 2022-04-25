@@ -42,7 +42,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
     if (!firebaseUser) {
       throw new UnauthorizedException();
     }
-    console.log(firebaseUser);
+    console.log(JSON.stringify(firebaseUser));
     return firebaseUser;
   }
 }

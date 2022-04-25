@@ -3,11 +3,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { auth, db, logout } from "./firebase";
-import { query, collection, getDocs, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
+  const [token, setToken] = useState("");
   const navigate = useNavigate();
 
   const fetchUserName = async () => {
@@ -23,11 +24,23 @@ function Dashboard() {
     }
   };
 
+  const fetchToken = async () => {
+    try {
+      const data = await auth.currentUser.getIdToken(true)
+      console.log(data);
+      setToken(data);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching token");
+    }
+  };
+
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
 
     fetchUserName();
+    fetchToken();
   }, [user, loading]);
 
   return (
