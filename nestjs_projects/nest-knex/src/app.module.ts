@@ -7,7 +7,7 @@ import { UsersModule } from './users/users.module';
     KnexModule.forRoot({
       config: {
         client: 'mysql',
-        version: '5.7',
+        version: '8.0.21',
         useNullAsDefault: true,
         connection: {
           host: '127.0.0.1',
